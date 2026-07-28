@@ -1,0 +1,8 @@
+# 8917 Clash/Mihomo direct rules
+# Format: Mihomo classical rule-provider text
+# Status: intentionally empty until each public rule is reviewed.
+
+# Examples only; remove the leading # after review:
+# DOMAIN,example.com
+# DOMAIN-SUFFIX,example.com
+# IP-CIDR,192.0.2.0/24,no-resolve
