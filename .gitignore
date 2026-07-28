@@ -1,0 +1,18 @@
+# Local secrets and machine-specific overrides
+secrets/
+*.local.yaml
+*.local.yml
+.env
+.env.*
+
+# Credentials and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Backups and temporary files
+*.bak
+*.bak.*
+*.tmp
+*.swp
