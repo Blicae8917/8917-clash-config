@@ -1,0 +1,8 @@
+# 8917 Clash/Mihomo proxy rules
+# Format: Mihomo classical rule-provider text
+# Status: intentionally empty until each public rule is reviewed.
+
+# Examples only; remove the leading # after review:
+# DOMAIN,example.com
+# DOMAIN-SUFFIX,example.com
+# IP-CIDR,203.0.113.0/24,no-resolve
