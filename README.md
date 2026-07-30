@@ -4,13 +4,14 @@
 
 ## 当前状态
 
-仓库已经完成安全骨架初始化。`rules/*.list` 目前只包含注释，没有启用任何真实分流规则；待逐条审阅来源、许可和业务边界后再补充。
+`rules/direct.list` 与 `rules/proxy.list` 已启用，作为 8917 Clash 配置的公开规则正本。两份文件固定导入自已审计的 shiliu 规则快照，后续由 8917 维护；来源和授权边界见 `rules/NOTICE.md`。
 
 ## 目录结构
 
 - `rules/direct.list`：确认应直连的公开域名或网段规则。
 - `rules/proxy.list`：确认应通过代理的公开域名或网段规则。
 - `rules/README.md`：规则格式、职责和审阅要求。
+- `rules/NOTICE.md`：导入来源、固定提交和授权边界。
 - `examples/rule-providers.yaml`：Mihomo `rule-providers` 引用示例。
 - `LICENSE`：MIT 许可证。
 
@@ -36,3 +37,4 @@
 2. 新增规则必须说明用途，并确认不会泄露内部网络信息。
 3. 引入第三方内容前检查来源、更新方式和许可证；优先保留上游链接或生成脚本，而不是无来源复制。
 4. 修改后先做 YAML/规则语法检查，再在测试配置中验证命中结果。
+5. `rules/direct.list` 与 `rules/proxy.list` 是供配置引用的公开正本；完整 Clash 配置仍只保留在私有工作区。
