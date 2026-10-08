@@ -18,6 +18,15 @@ rule-providers:
     url: https://raw.githubusercontent.com/Blicae8917/8917-clash-config/main/rules/proxy.list
     interval: 86400
 
+  8917-ai:
+    type: http
+    behavior: classical
+    format: text
+    path: ./ruleset/8917-ai.list
+    url: https://raw.githubusercontent.com/Blicae8917/8917-clash-config/main/rules/ai.list
+    interval: 86400
+
 rules:
   - RULE-SET,8917-direct,DIRECT
   - RULE-SET,8917-proxy,PROXY
+  - RULE-SET,8917-ai,AI

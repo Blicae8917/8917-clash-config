@@ -1,0 +1,43 @@
+# 8917 AI 补充规则：Claude / Anthropic 周边服务
+# 用途：补充 MetaCubeX category-ai-!cn 未覆盖的埋点、功能开关、客服、支付和人机验证，
+#       让这些请求与 claude.ai 使用同一出口。策略组由客户端配置里的 RULE-SET 行指定。
+# 格式：Mihomo behavior: classical / format: text，每行一条，不写策略组。
+# 来源：8917 自有维护（2026-10-08 新增），不属于 shiliu 导入快照。
+
+# 埋点与错误上报
+DOMAIN-SUFFIX,datadoghq.com
+DOMAIN-SUFFIX,sentry.io
+
+# 功能开关（Statsig 及其备用域名）
+DOMAIN-SUFFIX,statsig.com
+DOMAIN-SUFFIX,statsigapi.net
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,featureassets.org
+DOMAIN-SUFFIX,prodregistryv2.org
+
+# Claude 发布页与访问统计
+DOMAIN-SUFFIX,claude.site
+DOMAIN-SUFFIX,usefathom.com
+
+# 客服（Intercom）
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+
+# 付费（Stripe）
+DOMAIN-SUFFIX,stripe.com
+DOMAIN-SUFFIX,stripe.network
+
+# 人机验证（Cloudflare Turnstile）
+DOMAIN,challenges.cloudflare.com
+
+# 统计分析（Segment）
+DOMAIN-SUFFIX,segment.io
+DOMAIN-SUFFIX,segment.com
+
+# Claude 桌面 App 进程：macOS 主进程与 Helper、Windows 主程序。
+# 只有桌面端 Mihomo 能识别进程；手机端不会命中。
+PROCESS-NAME,Claude
+PROCESS-NAME,Claude Helper
+PROCESS-NAME,Claude Helper (Renderer)
+PROCESS-NAME,Claude Helper (GPU)
+PROCESS-NAME,Claude.exe

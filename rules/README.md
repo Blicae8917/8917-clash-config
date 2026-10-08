@@ -6,6 +6,7 @@
 
 - `direct.list`：需要直连的公开规则。
 - `proxy.list`：需要交给代理策略组的公开规则。
+- `ai.list`：需要交给 AI 策略组的补充规则；可包含 `PROCESS-NAME`，仅桌面端生效。
 - `NOTICE.md`：当前规则快照的来源和授权说明。
 
 ## 格式
@@ -30,5 +31,5 @@ IP-CIDR,192.0.2.0/24,no-resolve
 
 ## 当前来源
 
-当前两份规则固定导入自 `shiliu16shiliu/shiliu16shiliu` 的提交
+`direct.list` 与 `proxy.list` 固定导入自 `shiliu16shiliu/shiliu16shiliu` 的提交
 `3033e92418e6840076a4a65de5dd9137da327fe5`，并由 8917 接手维护。更新规则时不得重新引入订阅、节点凭据、政务网内部信息或完整运行配置。
