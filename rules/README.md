@@ -7,6 +7,7 @@
 - `direct.list`：需要直连的公开规则。
 - `proxy.list`：需要交给代理策略组的公开规则。
 - `ai.list`：需要交给 AI 策略组的补充规则；可包含 `PROCESS-NAME`，仅桌面端生效。
+- `grokbot.list`：Grok Bot 桌面 App 自身连接规则；可包含 `PROCESS-NAME`，仅桌面端生效，须排在 `ai` 规则之前。
 - `NOTICE.md`：当前规则快照的来源和授权说明。
 
 ## 格式

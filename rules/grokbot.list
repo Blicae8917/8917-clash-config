@@ -1,0 +1,21 @@
+# 8917 Grok Bot 规则：Grok Bot 桌面 App 自身连接（2026-10-09 观察期）
+# 用途：Grok Bot 本地通道长连接经住宅链式落地两跳后频繁显示离线，
+#       观察期内让 Grok Bot 自身流量单跳走 8917 节点。策略组由客户端配置里的 RULE-SET 行指定，
+#       且须排在 ai / 8917-ai 之前；Claude 等其他 AI 服务仍按 ai.list 走原出口。
+# 格式：Mihomo behavior: classical / format: text，每行一条，不写策略组。
+# 来源：8917 自有维护（2026-10-09 新增），不属于 shiliu 导入快照。
+
+# Grok Bot 服务端（api2/api3.cursor.sh 长连接、*.cursorvm.com 本地通道等）
+DOMAIN-SUFFIX,cursor.sh
+DOMAIN-SUFFIX,cursorvm.com
+DOMAIN-SUFFIX,cursor.com
+DOMAIN-SUFFIX,cursorapi.com
+
+# Grok Bot 桌面 App 进程：macOS 主进程与各 Helper；Windows 上 Electron 主进程与子进程均为 Grok Bot.exe。
+# 只有桌面端 Mihomo 能识别进程；手机端不会命中。
+PROCESS-NAME,Grok Bot
+PROCESS-NAME,Grok Bot Helper
+PROCESS-NAME,Grok Bot Helper (Renderer)
+PROCESS-NAME,Grok Bot Helper (GPU)
+PROCESS-NAME,Grok Bot Helper (Plugin)
+PROCESS-NAME,Grok Bot.exe

@@ -8,11 +8,14 @@
 
 `rules/ai.list` 是 8917 自有的 AI 补充规则，用于让 Claude / Anthropic 周边服务与 claude.ai 走同一出口。
 
+`rules/grokbot.list` 是 8917 自有的 Grok Bot 规则，用于让 Grok Bot 桌面 App 自身连接单独指定出口；须排在 `ai` / `8917-ai` 之前。
+
 ## 目录结构
 
 - `rules/direct.list`：确认应直连的公开域名或网段规则。
 - `rules/proxy.list`：确认应通过代理的公开域名或网段规则。
 - `rules/ai.list`：AI 服务补充规则（Claude / Anthropic 周边域名与桌面进程），交给 AI 策略组。
+- `rules/grokbot.list`：Grok Bot 桌面 App 自身连接（服务域名与桌面进程），交给单独指定的策略组。
 - `rules/README.md`：规则格式、职责和审阅要求。
 - `rules/NOTICE.md`：导入来源、固定提交和授权边界。
 - `examples/rule-providers.yaml`：Mihomo `rule-providers` 引用示例。
@@ -23,6 +26,7 @@
 - 直连规则：`https://raw.githubusercontent.com/Blicae8917/8917-clash-config/main/rules/direct.list`
 - 代理规则：`https://raw.githubusercontent.com/Blicae8917/8917-clash-config/main/rules/proxy.list`
 - AI 补充规则：`https://raw.githubusercontent.com/Blicae8917/8917-clash-config/main/rules/ai.list`
+- Grok Bot 规则：`https://raw.githubusercontent.com/Blicae8917/8917-clash-config/main/rules/grokbot.list`
 
 ## 安全边界
 
