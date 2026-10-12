@@ -4,6 +4,16 @@
 # 格式：Mihomo behavior: classical / format: text，每行一条，不写策略组。
 # 来源：8917 自有维护（2026-10-08 新增），不属于 shiliu 导入快照。
 
+# Claude / Anthropic 主域名（category-ai 已覆盖，这里显式兜底）
+DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,claudeusercontent.com
+
+# Anthropic 自有 IP 段：只拿到真实 IP、没有域名的连接（如命令行工具绕过 fake-ip）
+# 也走 AI 出口。no-resolve：不为匹配此行触发 DNS 解析。（2026-10-11 新增）
+IP-CIDR,160.79.104.0/23,no-resolve
+
 # 埋点与错误上报
 DOMAIN-SUFFIX,datadoghq.com
 DOMAIN-SUFFIX,sentry.io
@@ -41,3 +51,9 @@ PROCESS-NAME,Claude Helper
 PROCESS-NAME,Claude Helper (Renderer)
 PROCESS-NAME,Claude Helper (GPU)
 PROCESS-NAME,Claude.exe
+
+# Claude Code 命令行（原生安装版二进制名 claude / claude.exe）。
+# npm 安装版实际进程是 node，不按进程名匹配（会误伤所有 node 程序），
+# 由上面的 Anthropic IP 段与域名兜底。
+PROCESS-NAME,claude
+PROCESS-NAME,claude.exe
