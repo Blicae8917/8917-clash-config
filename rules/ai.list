@@ -1,14 +1,19 @@
 # 8917 AI 补充规则：Claude / Anthropic 周边服务
 # 用途：补充 MetaCubeX category-ai-!cn 未覆盖的埋点、功能开关、客服、支付和人机验证，
 #       让这些请求与 claude.ai 使用同一出口。策略组由客户端配置里的 RULE-SET 行指定。
+# 分层：本文件是域名层（第二层）。两份 8917 桌面版另有内联的 AI 进程层（第一层，
+#       PROCESS-PATH-REGEX，排在 8917-direct 之前），由 8917-ops 构建器生成，不放在本文件，
+#       因为手机端客户端不支持按路径匹配进程。
 # 格式：Mihomo behavior: classical / format: text，每行一条，不写策略组。
-# 来源：8917 自有维护（2026-10-08 新增），不属于 shiliu 导入快照。
+# 来源：8917 自有维护（2026-10-08 新增，2026-10-15 补插件外连域名），不属于 shiliu 导入快照。
 
 # Claude / Anthropic 主域名（category-ai 已覆盖，这里显式兜底）
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
 DOMAIN-SUFFIX,claude.com
 DOMAIN-SUFFIX,claudeusercontent.com
+# Anthropic 托管的 MCP（pubmed、hcls、microsoft365 等）。与上面 claude.com 重叠，显式登记便于审计。
+DOMAIN-SUFFIX,mcp.claude.com
 
 # Anthropic 自有 IP 段：只拿到真实 IP、没有域名的连接（如命令行工具绕过 fake-ip）
 # 也走 AI 出口。no-resolve：不为匹配此行触发 DNS 解析。（2026-10-11 新增）
@@ -45,15 +50,118 @@ DOMAIN-SUFFIX,segment.io
 DOMAIN-SUFFIX,segment.com
 
 # Claude 桌面 App 进程：macOS 主进程与 Helper、Windows 主程序。
-# 只有桌面端 Mihomo 能识别进程；手机端不会命中。
+# 只有桌面端 Mihomo 能识别进程；手机端不会命中。桌面版的完整进程覆盖见文件头的 AI 进程层，
+# 这里保留按名匹配，作为只引用本规则集的客户端的兜底。
 PROCESS-NAME,Claude
 PROCESS-NAME,Claude Helper
 PROCESS-NAME,Claude Helper (Renderer)
 PROCESS-NAME,Claude Helper (GPU)
+PROCESS-NAME,Claude Helper (Plugin)
 PROCESS-NAME,Claude.exe
 
-# Claude Code 命令行（原生安装版二进制名 claude / claude.exe）。
-# npm 安装版实际进程是 node，不按进程名匹配（会误伤所有 node 程序），
-# 由上面的 Anthropic IP 段与域名兜底。
+# Claude Code 命令行（原生安装版、桌面端内置版与 2026-10 起的 npm 版，进程名都是 claude / claude.exe）。
+# 原生安装版 ~/.local/share/claude/versions/<版本> 的进程名是版本号，按名匹配不到，由 AI 进程层覆盖。
 PROCESS-NAME,claude
 PROCESS-NAME,claude.exe
+
+# ── Claude 插件 / 连接器外连域名（2026-10-15 盘点）──
+# 来源：Mac 本机全部插件配置中的 MCP 地址（79 个）与 GB10 盘点（常连 8 个 + 启动探测 77 个）取并集，共 79 个；
+#   GB10 的全部包含在内，Mac 独有 gitlab.com（不加，见文末）与 mcp.context7.com（context7 插件）。
+# 指挥官裁决：以后可能启用，预先纳入 AI 出口。按插件分组；用 DOMAIN 精确匹配插件专用主机，不连带厂商主站。
+# 已被上面或 category-ai 覆盖、不重复登记：*.mcp.claude.com（pubmed、bio-research、microsoft-365）、
+#   mcp.datadoghq.com、mcp.stripe.com、api.githubcopilot.com（github 插件）。
+# 地址由用户自填、无法预置：snowflake、databricks、benchling。
+
+# 研发与项目管理：linear、atlassian、asana、monday、clickup、trello、notion、pagerduty、context7、zapier
+DOMAIN,mcp.linear.app
+DOMAIN,mcp.atlassian.com
+DOMAIN,mcp.asana.com
+DOMAIN,mcp.monday.com
+DOMAIN,mcp.clickup.com
+DOMAIN,mcp.trello.com
+DOMAIN,mcp.notion.com
+DOMAIN,mcp.pagerduty.com
+DOMAIN,mcp.context7.com
+DOMAIN,mcp.zapier.com
+
+# 设计与建站：figma、canva、wix、emergent、animatedwebs
+DOMAIN,mcp.figma.com
+DOMAIN,mcp.canva.com
+DOMAIN,mcp.wix.com
+DOMAIN,mcp.emergent.sh
+DOMAIN,mcp.animatedwebs.com
+
+# 数据与增长分析：amplitude（含欧区）、hex、definite、pendo、similarweb、supermetrics、ahrefs、klaviyo、crunchbase、mailchimp
+DOMAIN,mcp.amplitude.com
+DOMAIN,mcp.eu.amplitude.com
+DOMAIN,app.hex.tech
+DOMAIN,api.definite.app
+DOMAIN,app.pendo.io
+DOMAIN,mcp.similarweb.com
+DOMAIN,mcp.supermetrics.com
+DOMAIN,api.ahrefs.com
+DOMAIN,mcp.klaviyo.com
+DOMAIN,mcp.crunchbase.com
+DOMAIN,ai-inc.mailchimp.com
+
+# 销售与客户：hubspot、salesforce、apollo、clay、outreach、close、gong、lusha、zoominfo、revenue-grid、
+#   zoho（books、crm、desk、projects）、calendly、intercom、docusign、fireflies、otter、ringcentral
+DOMAIN,mcp.hubspot.com
+DOMAIN,api.salesforce.com
+DOMAIN,mcp.apollo.io
+DOMAIN,api.clay.com
+DOMAIN,api.outreach.io
+DOMAIN,mcp.close.com
+DOMAIN,mcp.gong.io
+DOMAIN,mcp.lusha.com
+DOMAIN,mcp.zoominfo.com
+DOMAIN,mcp.revenuegrid.com
+DOMAIN-SUFFIX,zohomcp.com
+DOMAIN,mcp.calendly.com
+DOMAIN,mcp.intercom.com
+DOMAIN,mcp.docusign.com
+DOMAIN,api.fireflies.ai
+DOMAIN,mcp.otter.ai
+DOMAIN,mcp.labs.ringcentral.com
+
+# 财务与支付：paypal、square、ramp、xero、myob、quickbooks、gusto、airwallex、expensify
+DOMAIN,mcp.paypal.com
+DOMAIN,mcp.squareup.com
+DOMAIN,mcp.ramp.com
+DOMAIN,mcp.xero.com
+DOMAIN,mcp.myob.com
+DOMAIN,ai-inc.quickbooks.intuit.com
+DOMAIN,mcp.api.gusto.com
+DOMAIN,mcp.airwallex.com
+DOMAIN,www.expensify.com
+
+# 办公协作与存储：slack、box、egnyte、guru、zoom、shopify
+DOMAIN,mcp.slack.com
+DOMAIN,mcp.box.com
+DOMAIN,mcp-server.egnyte.com
+DOMAIN,mcp.api.getguru.com
+DOMAIN,mcp.zoom.us
+DOMAIN,setup.shopify.com
+
+# 科研：consensus、owkin、open targets、biorender、synapse、wiley
+DOMAIN,mcp.consensus.app
+DOMAIN,mcp.k.owkin.com
+DOMAIN,mcp.platform.opentargets.org
+DOMAIN,mcp.services.biorender.com
+DOMAIN,mcp.synapse.org
+DOMAIN,connector.scholargateway.ai
+
+# ── 指挥官 2026-10-16 裁决：以下 5 个从原分流组改走 AI ──
+# Google 工作区（gmail、google-calendar、google-drive）：原走 🍀 Google；这三个主机只给 MCP 用，不连带其他 Google 流量。
+DOMAIN,gmailmcp.googleapis.com
+DOMAIN,calendarmcp.googleapis.com
+DOMAIN,drivemcp.googleapis.com
+# BigQuery：原走 🍀 Google；与所有 BigQuery 客户端共用主机，本机全部 BigQuery 流量都走 AI 出口。
+DOMAIN,bigquery.googleapis.com
+# TikTok 广告：原走 🎵 TikTok；与 TikTok 商业 API 共用主机。
+DOMAIN,business-api.tiktok.com
+
+# ── 指挥官 2026-10-16 裁决：不加 ──
+# GitLab：MCP 地址就是 gitlab.com 本站，加了会连带全部 gitlab.com 网页与 git 流量。
+# Claude 自己访问 gitlab.com 时由桌面版 AI 进程层兜住；其他程序维持 🚀 默认代理。
+# DOMAIN,gitlab.com
