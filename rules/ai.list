@@ -64,6 +64,23 @@ PROCESS-NAME,Claude.exe
 PROCESS-NAME,claude
 PROCESS-NAME,claude.exe
 
+# ── Cursor 与 Grok Bot（指挥官 2026-10-18 方案 C，原 grokbot.list 并入）──
+# Cursor 配有 Claude API（自带 Key 的请求经 Cursor 服务端转发，本机只连这些域名）。
+# category-ai-!cn 已 include cursor，这里显式登记，防止上游调整分类后漏掉。
+DOMAIN-SUFFIX,cursor.sh
+DOMAIN-SUFFIX,cursorvm.com
+DOMAIN-SUFFIX,cursor.com
+DOMAIN-SUFFIX,cursorapi.com
+DOMAIN-SUFFIX,cursor-cdn.com
+# Grok Bot 桌面 App 进程：macOS 主进程与各 Helper；Windows 上主进程与子进程均为 Grok Bot.exe。
+# 桌面版的完整覆盖见 AI 进程层（含 Cursor、Cursor Agent），这里按名兜底，覆盖没有进程层的家用 Windows。
+PROCESS-NAME,Grok Bot
+PROCESS-NAME,Grok Bot Helper
+PROCESS-NAME,Grok Bot Helper (Renderer)
+PROCESS-NAME,Grok Bot Helper (GPU)
+PROCESS-NAME,Grok Bot Helper (Plugin)
+PROCESS-NAME,Grok Bot.exe
+
 # ── Claude 插件 / 连接器外连域名（2026-10-15 盘点）──
 # 来源：Mac 本机全部插件配置中的 MCP 地址（79 个）与 GB10 盘点（常连 8 个 + 启动探测 77 个）取并集，共 79 个；
 #   GB10 的全部包含在内，Mac 独有 gitlab.com（不加，见文末）与 mcp.context7.com（context7 插件）。
