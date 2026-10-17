@@ -1,7 +1,8 @@
-# 8917 Grok Bot 规则：Grok Bot 桌面 App 自身连接（2026-10-09 观察期）
-# 用途：Grok Bot 本地通道长连接经住宅链式落地两跳后频繁显示离线，
-#       观察期内让 Grok Bot 自身流量单跳走 8917 节点。策略组由客户端配置里的 RULE-SET 行指定，
-#       且须排在 ai / 8917-ai 之前；Claude 等其他 AI 服务仍按 ai.list 走原出口。
+# 8917 Grok Bot / Cursor 规则：Cursor 服务端域名与 Grok Bot 桌面 App 自身连接
+# 用途：2026-10-09 起观察期内单跳走 8917 节点；2026-10-18 起指挥官改为方案 C，
+#       与 Claude 等 AI 服务一样走 🤖 AI（住宅链式落地），观察期单跳作废。
+#       策略组由客户端配置里的 RULE-SET 行指定，排在 ai / 8917-ai 之前。
+#       两份 8917 桌面版另有内联 AI 进程层覆盖 Cursor、Cursor Agent 与 Grok Bot 的全部进程连接。
 # 格式：Mihomo behavior: classical / format: text，每行一条，不写策略组。
 # 来源：8917 自有维护（2026-10-09 新增），不属于 shiliu 导入快照。
 
